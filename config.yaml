@@ -1,0 +1,8 @@
+host:
+  ip: 127.0.0.1
+  port: 7701
+  path: /plugin/2
+  mode: TCP
+  volumeMethod: /plugin/1/parameter/0
+config:
+  volume: 100
