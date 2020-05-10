@@ -93,7 +93,7 @@ export const actions = {
             }, 10000)
         }
     },
-    sendOsc({state}, {endpoint, args, prefix}) {
+    send({state}, {endpoint, args, prefix}) {
         try {
             console.log('[OSC] Calling ', `${(prefix === undefined || prefix) ? store.get('host.path') : ''}${endpoint}`, 'with', JSON.stringify(args, 4));
             state.oscPort.send({
@@ -105,7 +105,7 @@ export const actions = {
         }
     },
     afterConnectActions({state, dispatch}) {
-        dispatch('sendOsc', {
+        dispatch('send', {
             endpoint: store.get('host.volumeMethod'),
             args: [
                 {

@@ -2,7 +2,7 @@
     <div class="volume">
       <div class="button" @click="show = !show"></div>
       <div class="popup" v-if="show">
-        <v-slider height="150" :value="$store.state.volume" min="0" max="100" @input="setVolume"
+        <v-slider height="150" :value="volume" min="0" max="100" @input="setVolume"
           vertical></v-slider>
       </div>
     </div>
@@ -14,13 +14,15 @@ import { mapMutations } from 'vuex'
     components: {},
     data() {
       return {
-        volume: 75,
         show: false 
       }
     },
     computed: {
       label() {
         return `${this.$store.state.volume}%`;
+      },
+      volume() {
+        return this.$store.state.volume;
       }
     },
     methods: {

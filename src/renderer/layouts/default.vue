@@ -42,6 +42,7 @@ export default {
   created () {
     this.$vuetify.theme.dark = true
     this.$store.dispatch('connectToHost');
+    this.$store.dispatch('fxb/loadBase');
   }
 }
 </script>
