@@ -33,6 +33,20 @@ export const mutations = {
         state.buffer.writeInt32LE(outerHtml.length, 4)
         state.reader.set('data', state.buffer)
         state.reader.write(__dirname + '/../assets/ssd5.5.fxb')
+    },
+    setParameters (state, data) {
+        for (let key in data) {
+            state.conf[key] = data[key]
+            state.xml.setAttribute(key, data[key])
+        }
+        const outerHtml = Buffer.from(state.xml.outerHTML)
+        state.buffer = Buffer.concat([
+            state.buffer.slice(0, 8),
+            outerHtml
+        ])
+        state.buffer.writeInt32LE(outerHtml.length, 4)
+        state.reader.set('data', state.buffer)
+        state.reader.write(__dirname + '/../assets/ssd5.5.fxb')
     }
 }
 
