@@ -1,5 +1,16 @@
 import { Fxb } from 'fxbjs'
 
+const Store = require('electron-store')
+const yaml = require('js-yaml');
+const store = new Store({
+    cwd: process.cwd(),
+    name: 'config',
+	fileExtension: 'yaml',
+	serialize: yaml.safeDump,
+	deserialize: yaml.safeLoad
+});
+
+
 export const strict = false
 
 export const state = () => ({
@@ -32,7 +43,7 @@ export const mutations = {
         ])
         state.buffer.writeInt32LE(outerHtml.length, 4)
         state.reader.set('data', state.buffer)
-        state.reader.write(__dirname + '/../assets/ssd5.5.fxb')
+        state.reader.write(store.get('fxb.path'))
     },
     setParameters (state, data) {
         for (let key in data) {
@@ -46,13 +57,13 @@ export const mutations = {
         ])
         state.buffer.writeInt32LE(outerHtml.length, 4)
         state.reader.set('data', state.buffer)
-        state.reader.write(__dirname + '/../assets/ssd5.5.fxb')
+        state.reader.write(store.get('fxb.path'))
     }
 }
 
 export const actions = {
     loadBase({ commit }) {
-        const base = Fxb.loadFile(__dirname + '/../assets/ssd5.5.fxb')
+        const base = Fxb.loadFile(store.get('fxb.path'))
         const data = base.get('data')
         commit('setReader', base)
         commit('setBuffer', data)

@@ -2,12 +2,15 @@
     <div>
       
       <button @click="setVolume(0)">Set volume 0</button>
-      <button @click="analyze">Analyze</button>
+      <button @click="setPerformance(-1)">setPerformance -1</button>
+      <button @click="setPerformance(0)">setPerformance 0</button>
+      <button @click="setPerformance(1)">setPerformance 1</button>
     </div>
 </template>
 
 <script>
 import { Fxb } from 'fxbjs'
+import { mapMutations } from 'vuex'
 
 export default {
   methods: {
@@ -23,13 +26,9 @@ export default {
         prefix: false
       })
     },
-    analyze() {
-      const base = Fxb.loadFile(__dirname + '/../assets/ssd5.5.fxb')
-      const data = base.get('data')
-      const size = data.readInt32LE(4);
-      const content = data.slice(8, size + 8)
-      console.log(content.toString());
-    }
+    ...mapMutations({
+      setPerformance: 'setPerformance'
+    })
    }
   }
 </script>

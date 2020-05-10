@@ -4,5 +4,8 @@ host:
   path: /plugin/2
   mode: TCP
   volumeMethod: /plugin/1/parameter/0
+  performanceMethod: /performance/num
+fxb:
+  path: 'D:\\vsthostx64_beta\\Data\\Bank-1\\P-1FX2.fxb'
 config:
   volume: 100

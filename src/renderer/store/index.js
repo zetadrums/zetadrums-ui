@@ -40,6 +40,23 @@ export const mutations = {
             console.error(err)
         }
     },
+    setPerformance(state, nb) {
+        try {
+            const args = [
+                {
+                    type: 'i',
+                    value: nb
+                }
+            ];
+            console.log('[OSC] Calling ', store.get('host.performanceMethod'), 'with', JSON.stringify(args));
+            state.oscPort.send({
+                address: store.get('host.performanceMethod'),
+                args: args || []
+            }); 
+        } catch (err) {
+            console.error(err)
+        }
+    },
     setOscPort (state, oscPort) {
         state.oscPort = oscPort;
     }
