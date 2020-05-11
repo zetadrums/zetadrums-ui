@@ -10,13 +10,15 @@ const store = new Store({
 	deserialize: yaml.safeLoad
 });
 
+const generateXMLFromState = ret => {
+    return `<SSD_SAMPLER_STATE${Object.entries(ret).map(([key, value]) => ` ${key}="${value}"`).join('')}/>`
+}
 
 export const strict = false
 
 export const state = () => ({
    reader: null,
    buffer: null,
-   xml: null,
    conf: {}
 })
   
@@ -27,16 +29,12 @@ export const mutations = {
     setBuffer (state, buffer) {
         state.buffer = buffer;
     },
-    setXml (state, xml) {
-        state.xml = xml;
-    },
     setConf (state, conf) {
         state.conf = conf;
     },
     setParameter (state, {key, value}) {
         state.conf[key] = value
-        state.xml.setAttribute(key, value)
-        const outerHtml = Buffer.from(state.xml.outerHTML)
+        const outerHtml = Buffer.from(generateXMLFromState(state.conf))
         state.buffer = Buffer.concat([
             state.buffer.slice(0, 8),
             outerHtml
@@ -44,13 +42,13 @@ export const mutations = {
         state.buffer.writeInt32LE(outerHtml.length, 4)
         state.reader.set('data', state.buffer)
         state.reader.write(store.get('fxb.path'))
+        state.reader.write(store.get('fxb.temppath'))
     },
     setParameters (state, data) {
         for (let key in data) {
             state.conf[key] = data[key]
-            state.xml.setAttribute(key, data[key])
         }
-        const outerHtml = Buffer.from(state.xml.outerHTML)
+        const outerHtml = Buffer.from(generateXMLFromState(state.conf))
         state.buffer = Buffer.concat([
             state.buffer.slice(0, 8),
             outerHtml
@@ -58,6 +56,7 @@ export const mutations = {
         state.buffer.writeInt32LE(outerHtml.length, 4)
         state.reader.set('data', state.buffer)
         state.reader.write(store.get('fxb.path'))
+        state.reader.write(store.get('fxb.temppath'))
     }
 }
 
@@ -71,16 +70,17 @@ export const actions = {
         const size = data.readInt32LE(4);
         const content = data.slice(8, size + 8)
         
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(content, "text/html");
-        const ssdSamplerState = xmlDoc.getElementsByTagName('ssd_sampler_state')[0]
+        const regex = /([a-z_0-9\-]+)="([^"]+)"/gmi;
+        let m;
 
         let ret = {}
-        for (let o of ssdSamplerState.attributes) {
-            ret[o.name] = o.value
+        while ((m = regex.exec(content.toString())) !== null) {
+            if (m.index === regex.lastIndex) {
+                regex.lastIndex++;
+            }
+            ret[m[1]] = m[2]
         }
-
-        commit('setXml', ssdSamplerState)
+        
         commit('setConf', ret)
     }
 }

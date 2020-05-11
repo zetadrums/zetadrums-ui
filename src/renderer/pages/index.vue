@@ -2,9 +2,8 @@
     <div>
       
       <button @click="setVolume(0)">Set volume 0</button>
-      <button @click="setPerformance(-1)">setPerformance -1</button>
-      <button @click="setPerformance(0)">setPerformance 0</button>
-      <button @click="setPerformance(1)">setPerformance 1</button>
+      <button @click="setKick('Kick Snr 22 SQB')">Kick Snr 22 SQB</button>
+      <button @click="setKick('Kick Lwg 26 LCY')">Kick Lwg 26 LCY</button>
     </div>
 </template>
 
@@ -26,8 +25,17 @@ export default {
         prefix: false
       })
     },
+    setKick(value) {
+      this.setPerformance(0)
+      this.setParameters({
+        SAMPLER_loadedInstrument_idx_0instrument_name: value,
+        SAMPLER_instrument_idx_0instrument_name: value
+      })
+      this.setPerformance(-1)
+    },
     ...mapMutations({
-      setPerformance: 'setPerformance'
+      setPerformance: 'setPerformance',
+      setParameters: 'fxb/setParameters'
     })
    }
   }

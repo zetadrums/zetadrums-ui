@@ -7,5 +7,6 @@ host:
   performanceMethod: /performance/num
 fxb:
   path: 'D:\\vsthostx64_beta\\Data\\Bank-1\\P-1FX2.fxb'
+  temppath: 'D:\\vsthostx64_beta\\Data\\Bank-1\\P0FX2.fxb'
 config:
   volume: 100
