@@ -11,7 +11,11 @@ const store = new Store({
 });
 
 const generateXMLFromState = ret => {
-    return `<SSD_SAMPLER_STATE${Object.entries(ret).map(([key, value]) => ` ${key}="${value}"`).join('')}/>`
+    return `<SSD_SAMPLER_STATE${
+        Object.entries(ret)
+            .map(([key, value]) => ` ${key}="${value}"`)
+            .join('')
+    }/>`
 }
 
 export const strict = false
@@ -19,7 +23,8 @@ export const strict = false
 export const state = () => ({
    reader: null,
    buffer: null,
-   conf: {}
+   conf: {},
+   currentPerformance: false
 })
   
 export const mutations = {

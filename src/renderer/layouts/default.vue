@@ -43,6 +43,7 @@ export default {
     this.$vuetify.theme.dark = true
     this.$store.dispatch('connectToHost');
     this.$store.dispatch('fxb/loadBase');
+    this.$store.dispatch('kits/load', this.$store.state.currentKit);
   }
 }
 </script>
@@ -61,5 +62,18 @@ body {
   vertical-align: middle;
   display: inline-block;
   margin-left: 10px;
+}
+::-webkit-scrollbar {
+    width: 8px;
+}
+ 
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1); 
 }
 </style>

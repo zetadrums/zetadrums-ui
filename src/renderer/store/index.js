@@ -14,7 +14,10 @@ export const strict = false
 export const state = () => ({
     loggedInToHost: null,
     volume: store.get('config.volume', 100),
-    oscPort: null
+    oscPort: null,
+    categories: store.get('categories', []),
+    currentKit: store.get('kits.current'),
+    currentPerformance: store.get('kits.currentPerformance')
 })
   
 export const mutations = {
@@ -40,12 +43,14 @@ export const mutations = {
             console.error(err)
         }
     },
-    setPerformance(state, nb) {
+    refreshPerformance(state, nb) {
         try {
+            state.currentPerformance = state.currentPerformance === -1 ? 0 : -1
+            store.set('kits.currentPerformance', state.currentPerformance)
             const args = [
                 {
                     type: 'i',
-                    value: nb
+                    value: state.currentPerformance
                 }
             ];
             console.log('[OSC] Calling ', store.get('host.performanceMethod'), 'with', JSON.stringify(args));
@@ -56,6 +61,10 @@ export const mutations = {
         } catch (err) {
             console.error(err)
         }
+    },
+    setCurrentKit(state, id) {
+        state.currentKit = id
+        store.set('kits.current', id)
     },
     setOscPort (state, oscPort) {
         state.oscPort = oscPort;

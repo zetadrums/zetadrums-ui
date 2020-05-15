@@ -10,3 +10,16 @@ fxb:
   temppath: 'D:\\vsthostx64_beta\\Data\\Bank-1\\P0FX2.fxb'
 config:
   volume: 100
+categories:
+  - Rock
+  - Metal
+  - Vintage
+  - Indie
+  - Funk
+  - Jazz
+  - Country
+  - Raggae
+  - Eletronic
+kits:
+  current: test copy 3
+  currentPerformance: -1
