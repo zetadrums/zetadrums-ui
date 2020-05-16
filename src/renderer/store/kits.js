@@ -1,4 +1,5 @@
 const fs = require('fs')
+import { v4 as uuidv4 } from 'uuid';
 
 export const strict = false
 
@@ -8,13 +9,19 @@ export const state = () => ({
   
 export const mutations = {
     setKit (state, { id, data }) {
-        state.kits[id] = data;
+        state.kits[id] = data
+    },
+    addKit (state, data) {
+        const id = uuidv4()
+        const cwd = process.env.PORTABLE_EXECUTABLE_DIR || process.cwd()
+        fs.writeFileSync(cwd + '/kits/' + id + '.json', JSON.stringify(data))
+        state.kits[id] = data
     }
 }
 
 export const actions = {
     load({ commit, dispatch }, currentKit) {
-        const cwd = process.cwd();
+        const cwd = process.env.PORTABLE_EXECUTABLE_DIR || process.cwd()
         const files = fs.readdirSync(cwd + '/kits')
         for (let filepath of files) {
             if (filepath.match(/\.json$/) === false) {

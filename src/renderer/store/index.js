@@ -1,7 +1,7 @@
 const Store = require('electron-store')
 const yaml = require('js-yaml');
 const store = new Store({
-    cwd: process.cwd(),
+    cwd: process.env.PORTABLE_EXECUTABLE_DIR || process.cwd(),
     name: 'config',
 	fileExtension: 'yaml',
 	serialize: yaml.safeDump,

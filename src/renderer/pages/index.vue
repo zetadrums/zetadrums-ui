@@ -39,6 +39,9 @@
               </td>
             </tr>
           </table>
+          <v-btn class="mt-6" tile block color="primary" @click="$store.dispatch('kits/setCurrentKit', highlightedKit)" v-if="highlightedKit !== $store.state.currentKit">
+            Use this kit
+          </v-btn>
         </div>
       </div>
     </v-tab-item>
@@ -162,12 +165,12 @@ export default {
     }
 
     &.selected {
-      background: rgba(255, 255, 255, 0.2)
+      background: #003c80;
     }
   }
 
   .kitdef {
-    font-size: 13px;
+    font-size: 12px;
     
     td:first-child {
       color: rgba(255, 255, 255, 0.5);

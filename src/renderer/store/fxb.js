@@ -3,7 +3,7 @@ import { Fxb } from 'fxbjs'
 const Store = require('electron-store')
 const yaml = require('js-yaml');
 const store = new Store({
-    cwd: process.cwd(),
+    cwd: process.env.PORTABLE_EXECUTABLE_DIR || process.cwd(),
     name: 'config',
 	fileExtension: 'yaml',
 	serialize: yaml.safeDump,
@@ -87,5 +87,29 @@ export const actions = {
         }
         
         commit('setConf', ret)
+    },
+    importKitFromDAW({ commit }, { name, category, currentPerformance }) {
+        const base = Fxb.loadFile(currentPerformance === -1 ? store.get('fxb.path') : store.get('fxb.temppath'))
+        const data = base.get('data')
+
+        const size = data.readInt32LE(4);
+        const content = data.slice(8, size + 8)
+        
+        const regex = /([a-z_0-9\-]+)="([^"]+)"/gmi;
+        let m;
+
+        let ret = {}
+        while ((m = regex.exec(content.toString())) !== null) {
+            if (m.index === regex.lastIndex) {
+                regex.lastIndex++;
+            }
+            ret[m[1]] = m[2]
+        }
+        
+        commit('kits/addKit', {
+            name,
+            category,
+            data: ret
+        }, { root: true })
     }
 }

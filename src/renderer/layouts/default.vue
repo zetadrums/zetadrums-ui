@@ -4,7 +4,9 @@
       app
     >
     <v-row class="align-stretch">
-      <v-col cols="1" class="text-center font-weight-black display-1">ζ</v-col>
+      <v-col cols="1">
+        <img src="~/assets/logo.png" alt="ZetaDrums" class="app-logo" />
+      </v-col>
       <v-col cols="10" style="padding: 0"><Menu></Menu></v-col>
       <v-col cols="1" style="padding: 0"><Volume></Volume></v-col>
     </v-row>
@@ -54,6 +56,13 @@ html, body {
 }
 body {
   margin: 0 !important;
+}
+.app-logo {
+  width: 64px;
+  height: 34px;
+  position: relative;
+  top: 3px;
+  left: 12px;
 }
 .status-button {
   height: 12px;

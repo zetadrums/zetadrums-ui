@@ -3,8 +3,8 @@ const ICONS_DIR = 'build/icons/'
 const windowsOS = {
   win: {
     icon: ICONS_DIR + 'win-icon.ico',
-    publisherName: 'michal',
-    target: 'nsis'
+    publisherName: 'zetadrums',
+    target: 'portable'
   },
 
   nsis: {
@@ -42,10 +42,10 @@ const macOS = {
 }
 
 module.exports = {
-  asar: false,
-  productName: 'My browser',
-  appId: 'org.michalzarach.my-browser',
-  artifactName: 'my-browser-${version}.${ext}',
+  asar: true,
+  productName: 'ZetaDrums',
+  appId: 'io.zetadrums.ui',
+  artifactName: 'zetadrums.${ext}',
   directories: {
     output: 'build'
   },
