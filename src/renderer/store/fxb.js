@@ -75,7 +75,7 @@ export const actions = {
         const size = data.readInt32LE(4);
         const content = data.slice(8, size + 8)
         
-        const regex = /([a-z_0-9\-]+)="([^"]+)"/gmi;
+        const regex = /([a-z_0-9\-]+)="([^"]*)"/gmi;
         let m;
 
         let ret = {}
@@ -95,7 +95,7 @@ export const actions = {
         const size = data.readInt32LE(4);
         const content = data.slice(8, size + 8)
         
-        const regex = /([a-z_0-9\-]+)="([^"]+)"/gmi;
+        const regex = /([a-z_0-9\-]+)="([^"]*)"/gmi;
         let m;
 
         let ret = {}

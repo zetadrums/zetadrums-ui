@@ -10,6 +10,8 @@ fxb:
   temppath: 'D:\\vsthostx64_beta\\Data\\Bank-1\\P0FX2.fxb'
 config:
   volume: 100
+  fullscreen: true
+  alwaysOnTop: true
 categories:
   - Rock
   - Metal
